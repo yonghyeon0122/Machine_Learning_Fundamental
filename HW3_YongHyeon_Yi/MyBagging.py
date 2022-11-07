@@ -1,0 +1,126 @@
+import numpy as np
+from scipy import stats
+import random
+
+from sklearn.tree import DecisionTreeClassifier
+
+
+
+
+
+class MyBagging:
+    def __init__(self, num_trees, max_depth=None):
+
+        """
+            num_trees: [int],
+                Number of tree classifiers in the ensemble (must  be  an  integer >=1)
+
+            max_depth: [int, default=None],
+                The maximum depth of the trees. If None, then nodes are expanded until all leaves are pure.
+                
+        """
+        ### Your code starts here ###
+        self.num_trees = num_trees
+        self.max_depth = max_depth
+        self.X_ensamble = 0
+        self.r_ensamble = 0
+        self.clf_ensamble = []
+
+    def bootstrapDataset(self, X, r):
+        # Make a bootstrap dataset
+        
+        X_bootstrap = np.zeros(np.shape(X))
+        r_bootstrap = np.zeros(np.shape(r))
+        random_sample = np.random.randint(len(X), size = len(X))
+        
+        for sample_index, random_sample_index in enumerate(random_sample):
+            X_bootstrap[sample_index] = X[random_sample_index]
+            r_bootstrap[sample_index] = r[random_sample_index]
+                
+        return X_bootstrap, r_bootstrap
+        
+    def majorityVote(self, r_pred_ensamble):
+        # select the list of the predictions for each sample
+        # which is a column vector
+        # for each column, get the majority vote result
+        
+        # First, add the elements in each column vector                
+        r_pred_majorityVote = np.sum(r_pred_ensamble, axis = 0)
+        # Then, get the sign of each elements
+        # If the prediction has a same number, assign the result as '0'
+        r_pred_majorityVote[np.sign(r_pred_majorityVote)==1] = 1
+        r_pred_majorityVote[np.sign(r_pred_majorityVote)==-1] = -1
+        r_pred_majorityVote[np.sign(r_pred_majorityVote)==0] = 0
+
+        return r_pred_majorityVote       
+        
+    
+    def fit(self, X, r):
+
+        """
+            Build a Bagging classifier from the training set (X, r)
+            X: the feature matrix 
+            r: class labels
+            
+            Construct 'num_trees' number of bootstrap datasets and learn a distict decision tree on each bootstrap dataset
+            The class DecisionTreeClassifier from scikit-learn will be used
+            The hyperparameters of the decision tree is: criterion='entropy', random_state = 0
+            
+            1. Create 'num_trees' number of datasets
+            2. Train a distinct classifier for each dataset
+            
+        """
+
+        ### Your code starts here ###
+        # num_tree emsambles
+        self.X_ensamble = np.zeros((self.num_trees, np.shape(X)[0], np.shape(X)[1]))
+        self.r_ensamble = np.zeros((self.num_trees, len(r)))
+        self.clf_ensamble = []
+        
+        for dataset_index in range(self.num_trees):
+            X_bootstrap, r_bootstrap = self.bootstrapDataset(X,r)
+            self.X_ensamble[dataset_index] = X_bootstrap
+            self.r_ensamble[dataset_index] = r_bootstrap
+            
+            clf_tree = DecisionTreeClassifier(criterion = 'entropy', random_state = 0, max_depth = self.max_depth)
+            clf_tree.fit(X_bootstrap, r_bootstrap)
+            self.clf_ensamble.append(clf_tree)
+        
+   
+    def predict(self, X):
+
+        """
+            Predict class(es) for X as the number of tree classifiers in the ensemble grows
+
+            X: the feature matrix
+
+            Return:
+
+            r_pred: [list], contains predictions as the number of tree classifiers in the ensemble grows
+            The list should have the same size of num_trees.
+            Each element in the list has the same dimension of X (number of data points in the test set),
+            and the prediction is made based on the first k tree classifiers in the ensemble as k grows from 1 to num_trees.
+            E.g., when k = 1, the Bagging classifier makes predictions only based on the first tree classifier you built from self.fit function;
+            when k = num_tress, the Bagging classifier makes predictions based on all tree classifiers you built from self.fit function
+            
+
+        """
+        ### Your code starts here ###
+        # The predictions will be made with each of the classifier
+        r_pred = []
+        r_pred_ensamble = np.zeros((self.num_trees, len(X)))
+       
+        for clf_index in range(self.num_trees):            
+            clf_tree = self.clf_ensamble[clf_index]
+            r_pred_ensamble[clf_index] = clf_tree.predict(X)
+            
+
+        for k in range(self.num_trees):
+            # make predictions based on the first k tree classifiers
+            # The majority vote will decide the final prediction
+            r_pred_majorityVote = self.majorityVote(r_pred_ensamble[:k])
+            r_pred.append(r_pred_majorityVote)
+            
+        return r_pred
+
+

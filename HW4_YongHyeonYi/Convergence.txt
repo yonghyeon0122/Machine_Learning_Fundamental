@@ -1,0 +1,40 @@
+==== Logistic Regression ====
+==== E final: 155.93320424802175 Iteration: 4999 ====
+==== Logistic Regression ====
+==== E final: 148.8884084124472 Iteration: 4999 ====
+==== Logistic Regression ====
+==== E final: 123.00328077802769 Iteration: 4999 ====
+==== Logistic Regression ====
+==== E final: 132.07837904660482 Iteration: 4999 ====
+==== Logistic Regression ====
+==== E final: 142.3688708269347 Iteration: 4999 ====
+==== SVM ====
+==== E final: 0.4894921653716844 Iteration: 1761 ====
+==== SVM ====
+==== E final: 0.4853192799061252 Iteration: 295 ====
+==== SVM ====
+==== E final: 0.3595544832049885 Iteration: 43 ====
+==== SVM ====
+==== E final: 0.5097575531798326 Iteration: 701 ====
+==== SVM ====
+==== E final: 0.5758970103735593 Iteration: 359 ====
+==== SVM ====
+==== E final: 0.5386806916165784 Iteration: 1101 ====
+==== SVM ====
+==== E final: 0.4996989011810159 Iteration: 77 ====
+==== SVM ====
+==== E final: 0.3850088186833062 Iteration: 50 ====
+==== SVM ====
+==== E final: 0.5751113320106426 Iteration: 240 ====
+==== SVM ====
+==== E final: 0.633870254128669 Iteration: 526 ====
+==== SVM ====
+==== E final: 0.9985850310999127 Iteration: 59 ====
+==== SVM ====
+==== E final: 0.9983677146702018 Iteration: 17 ====
+==== SVM ====
+==== E final: 0.9975017816841651 Iteration: 32 ====
+==== SVM ====
+==== E final: 0.9988321121255893 Iteration: 32 ====
+==== SVM ====
+==== E final: 0.9990901443237956 Iteration: 23 ====

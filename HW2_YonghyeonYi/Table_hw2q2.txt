@@ -1,0 +1,12 @@
+==== Error rates for MultiGaussClassify Full Cov with Boston50====
+F1	F2	F3	F4	F5	Mean	SD
+0.3235	0.2970	0.0990	0.3465	0.1485	0.2429	0.0998
+
+==== Error rates for MultiGaussClassify Diag Cov with Boston50====
+F1	F2	F3	F4	F5	Mean	SD
+0.3431	0.1782	0.1287	0.3762	0.1386	0.2330	0.1053
+
+==== Error rates for LogisticRegression with Boston50====
+F1	F2	F3	F4	F5	Mean	SD
+0.1569	0.1287	0.0990	0.2772	0.1980	0.1720	0.0619
+

@@ -1,0 +1,3 @@
+==== MySVM training accuracy: 1.0 ====
+==== LogisticRegression training accuracy: 0.9246 ====
+==== SVC training accuracy: 0.9843 ====
